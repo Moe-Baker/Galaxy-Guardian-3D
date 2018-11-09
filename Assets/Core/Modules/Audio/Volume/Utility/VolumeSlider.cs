@@ -30,22 +30,24 @@ namespace Game
 
         AudioMixerGroupController controller;
 
-        protected virtual void Start()
+        protected virtual IEnumerator Start()
         {
+            yield return null;
+
             controller = Core.Asset.Audio.Volume.FindController(group);
 
             var slider = GetComponent<Slider>();
 
             slider.minValue = 0f;
             slider.maxValue = 1f;
-            slider.value = controller.LinearVolume;
+            slider.value = controller.Volume;
 
             slider.onValueChanged.AddListener(OnValueChanged);
         }
 
         protected virtual void OnValueChanged(float newValue)
         {
-            controller.LinearVolume = newValue;
+            controller.Volume = newValue;
         }
     }
 }

@@ -46,7 +46,14 @@ namespace Game
         {
             base.ResetData();
 
-            data.Volumes = new Dictionary<string, float>();
+            data.Volumes = new List<AudioData.VolumeData>();
+        }
+
+        public override bool CheckData(AudioData data)
+        {
+            if (data.Volumes == null) return false;
+
+            return base.CheckData(data);
         }
 
         public override void Init()
@@ -69,25 +76,65 @@ namespace Game
     }
 
     [Serializable]
-    [DataContract]
+    [DataContract()]
     public struct AudioData
     {
+        [SerializeField]
         [DataMember]
-        Dictionary<string, float> volumes;
-        public Dictionary<string, float> Volumes { get { return volumes; } set { volumes = value; } }
-        public float GetVolume(string name)
+        List<VolumeData> volumes;
+        public List<VolumeData> Volumes { get { return volumes; } set { volumes = value; } }
+        public float GetVolume(string name, float defaultValue)
         {
-            if (volumes.ContainsKey(name))
-                return volumes[name];
+            for (int i = 0; i < volumes.Count; i++)
+                if (volumes[i].Name == name)
+                    return volumes[i].Value;
 
-            return 1f;
+            return defaultValue;
         }
         public void SetVolume(string name, float value)
         {
-            if (volumes.ContainsKey(name))
-                volumes[name] = value;
-            else
-                volumes.Add(name, value);
+            for (int i = 0; i < volumes.Count; i++)
+            {
+                if (volumes[i].Name == name)
+                {
+                    volumes[i].Value = value;
+                    return;
+                }
+            }
+
+            volumes.Add(new VolumeData(name, value));
+        }
+
+        [Serializable]
+        [DataContract(Name = "Data")]
+        public class VolumeData
+        {
+            [SerializeField]
+            [DataMember]
+            protected string name;
+            public string Name { get { return name; } }
+
+            [SerializeField]
+            [DataMember]
+            [Range(0f, 1f)]
+            protected float value;
+            public float Value
+            {
+                get
+                {
+                    return value;
+                }
+                set
+                {
+                    this.value = Mathf.Clamp01(value);
+                }
+            }
+
+            public VolumeData(string name, float value)
+            {
+                this.name = name;
+                this.value = value;
+            }
         }
     }
 }

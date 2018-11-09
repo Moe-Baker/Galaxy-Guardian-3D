@@ -113,6 +113,9 @@ namespace Game
                     try
                     {
                         data = (TData)serializer.ReadObject(file);
+
+                        if (!CheckData(data))
+                            throw new InvalidDataException();
                     }
                     catch (Exception)
                     {
@@ -124,6 +127,11 @@ namespace Game
                         SaveData();
                     }
                 }
+            }
+
+            public virtual bool CheckData(TData data)
+            {
+                return true;
             }
 
             public virtual void ResetData()
