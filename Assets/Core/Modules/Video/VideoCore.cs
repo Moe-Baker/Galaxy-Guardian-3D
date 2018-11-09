@@ -23,14 +23,11 @@ namespace Game
 {
 	public abstract class VideoCoreBase : Core.DataModule<VideoData>
 	{
-        protected override void ResetData()
+        public override void ResetData()
         {
             base.ResetData();
 
             data.Quality = VideoData.MaxQuality;
-
-            Debug.Log(data.Quality);
-            Debug.Log(VideoData.MaxQuality);
         }
 
         public VideoCoreBase()

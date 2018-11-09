@@ -28,7 +28,7 @@ namespace Game
         protected AudioMixerGroup group;
         public AudioMixerGroup Group { get { return group; } }
 
-        AudioCoreVolume.Controller controller;
+        AudioMixerGroupController controller;
 
         protected virtual void Start()
         {

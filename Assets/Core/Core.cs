@@ -92,7 +92,7 @@ namespace Game
                 }
             }
 
-            protected virtual void SaveData()
+            public virtual void SaveData()
             {
                 DataContractSerializer serializer = new DataContractSerializer(typeof(TData));
 
@@ -103,8 +103,8 @@ namespace Game
                     serializer.WriteObject(writer, data);
                 }
             }
-            
-            protected virtual void LoadData()
+
+            public virtual void LoadData()
             {
                 DataContractSerializer serializer = new DataContractSerializer(typeof(TData));
 
@@ -126,7 +126,7 @@ namespace Game
                 }
             }
 
-            protected virtual void ResetData()
+            public virtual void ResetData()
             {
                 data = Activator.CreateInstance<TData>();
             }

@@ -21,12 +21,13 @@ using UnityEngine.Audio;
 
 namespace Game
 {
-    public abstract partial class AudioCoreVolumeBase : AudioCore.Module
+    public abstract partial class AudioCoreVolumeBase : Core.Module
     {
+        public AudioCore Audio { get { return Core.Audio; } }
         public AudioMixer Mixer { get { return Audio.Mixer; } }
 
-        public Controller[] Controls { get; protected set; }
-        public Controller FindController(AudioMixerGroup group)
+        public AudioMixerGroupController[] Controls { get; protected set; }
+        public AudioMixerGroupController FindController(AudioMixerGroup group)
         {
             for (int i = 0; i < Controls.Length; i++)
             {
@@ -35,65 +36,6 @@ namespace Game
             }
 
             return null;
-        }
-        [Serializable]
-        public class Controller
-        {
-            public AudioMixerGroup Target { get; protected set; }
-
-            public AudioMixer Mixer { get { return Target.audioMixer; } }
-
-            public string Parameter { get; protected set; }
-
-            float decibalVolume;
-            public virtual float DecibalVolume
-            {
-                get
-                {
-                    if (Mixer.GetFloat(Parameter, out decibalVolume))
-                    {
-                        return decibalVolume;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + Target.name + " Mixer Group's volume");
-                    }
-                }
-                set
-                {
-                    if (Mixer.SetFloat(Parameter, value))
-                    {
-                        decibalVolume = value;
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + Target.name + " Mixer Group's volume");
-                    }
-                }
-            }
-
-            public virtual float LinearVolume
-            {
-                get
-                {
-                    return AudioCoreVolume.DecibelToLinear(decibalVolume);
-                }
-                set
-                {
-                    value = Mathf.Clamp01(value);
-
-                    DecibalVolume = AudioCoreVolume.LinearToDecibel(value);
-                }
-            }
-
-            public Controller(AudioMixerGroup target)
-            {
-                this.Target = target;
-
-                Parameter = Target.name + " Volume";
-
-                decibalVolume = DecibalVolume;
-            }
         }
 
         public override void Configure()
@@ -115,12 +57,14 @@ namespace Game
         {
             var groups = Mixer.FindMatchingGroups("");
 
-            Controls = new Controller[groups.Length];
+            Controls = new AudioMixerGroupController[groups.Length];
 
             for (int i = 0; i < groups.Length; i++)
             {
-                Controls[i] = new Controller(groups[i]);
+                Controls[i] = new AudioMixerGroupController(groups[i], Audio.Data.GetVolume(groups[i].name));
             }
+
+            Audio.SaveData();
         }
 
         public static float LinearToDecibel(float linear)
@@ -141,4 +85,71 @@ namespace Game
     {
 		
 	}
+
+    [Serializable]
+    public class AudioMixerGroupController
+    {
+        public AudioMixerGroup Target { get; protected set; }
+
+        public AudioMixer Mixer { get { return Target.audioMixer; } }
+
+        public string Parameter { get; protected set; }
+
+        float decibalVolume;
+        public virtual float DecibalVolume
+        {
+            get
+            {
+                if (Mixer.GetFloat(Parameter, out decibalVolume))
+                {
+                    return decibalVolume;
+                }
+                else
+                {
+                    throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + Target.name + " Mixer Group's volume");
+                }
+            }
+            set
+            {
+                if (Mixer.SetFloat(Parameter, value))
+                {
+                    decibalVolume = value;
+
+                    Core.Asset.Audio.Data.SetVolume(Target.name, AudioCoreVolume.DecibelToLinear(decibalVolume));
+                }
+                else
+                {
+                    throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + Target.name + " Mixer Group's volume");
+                }
+            }
+        }
+
+        public virtual float LinearVolume
+        {
+            get
+            {
+                return AudioCoreVolume.DecibelToLinear(decibalVolume);
+            }
+            set
+            {
+                value = Mathf.Clamp01(value);
+
+                DecibalVolume = AudioCoreVolume.LinearToDecibel(value);
+            }
+        }
+
+        public AudioMixerGroupController(AudioMixerGroup target)
+        {
+            this.Target = target;
+
+            Parameter = Target.name + " Volume";
+
+            decibalVolume = DecibalVolume;
+        }
+
+        public AudioMixerGroupController(AudioMixerGroup target, float volume) : this(target)
+        {
+            LinearVolume = volume;
+        }
+    }
 }

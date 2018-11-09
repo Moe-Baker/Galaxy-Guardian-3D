@@ -31,24 +31,22 @@ namespace Game
         protected AudioMixer mixer;
         public AudioMixer Mixer { get { return mixer; } }
 
-        #region Modules
         [SerializeField]
         protected AudioCoreVolume volume;
         public AudioCoreVolume Volume { get { return volume; } }
-
-        public abstract class ModuleBase : Core.Module
-        {
-            new public const string MenuPath = AudioCore.MenuPath + "Modules/";
-
-            public AudioCore Audio { get { return Core.Audio; } }
-        }
-        #endregion
 
         public override void Configure()
         {
             base.Configure();
 
             volume.Configure();
+        }
+
+        public override void ResetData()
+        {
+            base.ResetData();
+
+            data.Volumes = new Dictionary<string, float>();
         }
 
         public override void Init()
@@ -64,19 +62,32 @@ namespace Game
         }
     }
 
+    [CreateAssetMenu(menuName = MenuPath + "Asset")]
+	public partial class AudioCore : AudioCoreBase
+    {
+        
+    }
+
     [Serializable]
     [DataContract]
     public struct AudioData
     {
-
-    }
-
-    [CreateAssetMenu(menuName = MenuPath + "Asset")]
-	public partial class AudioCore : AudioCoreBase
-    {
-        public partial class Module : ModuleBase
+        [DataMember]
+        Dictionary<string, float> volumes;
+        public Dictionary<string, float> Volumes { get { return volumes; } set { volumes = value; } }
+        public float GetVolume(string name)
         {
+            if (volumes.ContainsKey(name))
+                return volumes[name];
 
+            return 1f;
+        }
+        public void SetVolume(string name, float value)
+        {
+            if (volumes.ContainsKey(name))
+                volumes[name] = value;
+            else
+                volumes.Add(name, value);
         }
     }
 }
