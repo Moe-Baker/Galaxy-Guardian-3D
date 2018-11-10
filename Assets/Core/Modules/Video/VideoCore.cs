@@ -21,47 +21,28 @@ using System.Runtime.Serialization;
 
 namespace Game
 {
-	public abstract class VideoCoreBase : Core.DataModule<VideoData>
+	public abstract class VideoCoreBase : Core.Module
 	{
-        public override void ResetData()
+        public int Quality
         {
-            base.ResetData();
+            get
+            {
+                return PlayerPrefs.GetInt(QualityID, MaxQuality);
+            }
+            set
+            {
+                value = Mathf.Clamp(value, 0, MaxQuality);
 
-            data.Quality = VideoData.MaxQuality;
+                PlayerPrefs.SetInt(QualityID, value);
+            }
         }
-
-        public VideoCoreBase()
-        {
-            fileName = nameof(VideoData) + ".sav";
-        }
+        public static string QualityID { get { return nameof(Quality); } }
+        public static int MaxQuality { get { return QualitySettings.names.Length - 1; } }
     }
 
     [CreateAssetMenu(menuName = MenuPath + "Video")]
     public partial class VideoCore : VideoCoreBase
     {
 
-    }
-
-    [DataContract]
-    [Serializable]
-    public partial struct VideoData
-    {
-        [SerializeField]
-        [DataMember]
-        int quality;
-        public int Quality
-        {
-            get
-            {
-                return quality;
-            }
-            set
-            {
-                value = Mathf.Clamp(value, 0, MaxQuality);
-
-                quality = value;
-            }
-        }
-        public static int MaxQuality { get { return QualitySettings.names.Length - 1; } }
     }
 }

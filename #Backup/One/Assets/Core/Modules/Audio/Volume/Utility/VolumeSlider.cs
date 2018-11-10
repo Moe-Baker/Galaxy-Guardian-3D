@@ -30,10 +30,13 @@ namespace Game
 
         AudioMixerGroupController controller;
 
-        protected virtual IEnumerator Start()
+        protected virtual void Start()
         {
-            yield return null;
+            Core.Asset.SceneAccessor.Coroutine.YieldFrame(Init);
+        }
 
+        protected virtual void Init()
+        {
             controller = Core.Asset.Audio.Volume.FindController(group);
 
             var slider = GetComponent<Slider>();

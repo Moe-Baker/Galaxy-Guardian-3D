@@ -59,6 +59,105 @@ namespace Game
 
             }
         }
+
+        public abstract class DataModuleBase<TData> : Core.Module
+        {
+            [SerializeField]
+            protected string fileName;
+            public string FileName { get { return fileName; } }
+            public virtual string SavePath { get { return Path.Combine(Application.dataPath, fileName); } }
+
+            [SerializeField]
+            protected TData data;
+            public TData Data { get { return data; } }
+
+            public override void Configure()
+            {
+                base.Configure();
+
+                ConfigureData();
+            }
+
+            public override void Init()
+            {
+                base.Init();
+
+                ApplyData(data);
+            }
+
+            #region Data
+            protected virtual void ConfigureData()
+            {
+                if (File.Exists(SavePath))
+                {
+                    LoadData();
+                }
+                else
+                {
+                    ResetData();
+
+                    SaveData();
+                }
+            }
+
+            public virtual void SaveData()
+            {
+                DataContractSerializer serializer = new DataContractSerializer(typeof(TData));
+
+                XmlWriterSettings settings = new XmlWriterSettings() { Indent = true };
+
+                using (XmlWriter writer = XmlWriter.Create(SavePath, settings))
+                {
+                    serializer.WriteObject(writer, data);
+                }
+            }
+
+            public virtual void LoadData()
+            {
+                DataContractSerializer serializer = new DataContractSerializer(typeof(TData));
+
+                using (FileStream file = new FileStream(SavePath, FileMode.Open))
+                {
+                    try
+                    {
+                        data = (TData)serializer.ReadObject(file);
+
+                        if (!CheckData(data))
+                            throw new InvalidDataException();
+                    }
+                    catch (Exception)
+                    {
+                        Debug.LogError("Error Loading " + typeof(TData).Name);
+
+                        file.Close();
+
+                        ResetData();
+                        SaveData();
+                    }
+                }
+            }
+
+            public virtual bool CheckData(TData data)
+            {
+                return true;
+            }
+
+            public virtual void ResetData()
+            {
+                data = Activator.CreateInstance<TData>();
+            }
+
+            protected virtual void SetData(TData data)
+            {
+
+            }
+
+            protected virtual void ApplyData(TData data)
+            {
+
+            }
+            #endregion
+        }
         #endregion
 
         #region Tools
@@ -85,7 +184,7 @@ namespace Game
             }
         }
 
-        public static Core Find()
+        static Core Find()
         {
             var cores = Resources.LoadAll<Core>("");
 
@@ -139,6 +238,11 @@ namespace Game
 	public partial class Core : CoreBase
     {
         public partial class Module : ModuleBase
+        {
+            
+        }
+
+        public partial class DataModule<TData> : DataModuleBase<TData>
         {
             
         }

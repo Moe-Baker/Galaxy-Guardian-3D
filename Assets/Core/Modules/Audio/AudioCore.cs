@@ -23,7 +23,7 @@ using System.Runtime.Serialization;
 
 namespace Game
 {
-    public abstract class AudioCoreBase : Core.DataModule<AudioData>
+    public abstract class AudioCoreBase : Core.Module
     {
         new public const string MenuPath = Core.Module.MenuPath + "Audio/";
 
@@ -31,41 +31,34 @@ namespace Game
         protected AudioMixer mixer;
         public AudioMixer Mixer { get { return mixer; } }
 
-        [SerializeField]
-        protected AudioCoreVolume volume;
-        public AudioCoreVolume Volume { get { return volume; } }
+        public Dictionary<AudioMixerGroup, AudioMixerGroupController> MixerGroupControllers { get; protected set; }
+        protected virtual void ConfigureMixerGroupControllers()
+        {
+            MixerGroupControllers = new Dictionary<AudioMixerGroup, AudioMixerGroupController>();
+
+            var groups = mixer.FindMatchingGroups("");
+
+            foreach (var group in groups)
+                MixerGroupControllers.Add(group, new AudioMixerGroupController(group));
+        }
 
         public override void Configure()
         {
             base.Configure();
 
-            volume.Configure();
+            Core.Asset.SceneAccessor.Coroutine.YieldFrame(ConfigureMixerGroupControllers);
         }
 
-        public override void ResetData()
+        public static float LinearToDecibel(float linear)
         {
-            base.ResetData();
-
-            data.Volumes = new List<AudioData.VolumeData>();
+            if (linear == 0)
+                return -144.0f;
+            else
+                return 20.0f * Mathf.Log10(linear);
         }
-
-        public override bool CheckData(AudioData data)
+        public static float DecibelToLinear(float dB)
         {
-            if (data.Volumes == null) return false;
-
-            return base.CheckData(data);
-        }
-
-        public override void Init()
-        {
-            base.Init();
-
-            volume.Init();
-        }
-
-        public AudioCoreBase()
-        {
-            fileName = nameof(AudioData) + ".sav";
+            return Mathf.Pow(10.0f, dB / 20.0f);
         }
     }
 
@@ -76,64 +69,52 @@ namespace Game
     }
 
     [Serializable]
-    [DataContract()]
-    public struct AudioData
+    public class AudioMixerGroupController
     {
-        [SerializeField]
-        [DataMember]
-        List<VolumeData> volumes;
-        public List<VolumeData> Volumes { get { return volumes; } set { volumes = value; } }
-        public float GetVolume(string name, float defaultValue)
-        {
-            for (int i = 0; i < volumes.Count; i++)
-                if (volumes[i].Name == name)
-                    return volumes[i].Value;
+        public AudioMixerGroup Target { get; protected set; }
 
-            return defaultValue;
-        }
-        public void SetVolume(string name, float value)
+        public AudioMixer Mixer { get { return Target.audioMixer; } }
+
+        public string Parameter { get { return Target.name + " Volume"; } }
+
+        public virtual float Volume
         {
-            for (int i = 0; i < volumes.Count; i++)
+            get
             {
-                if (volumes[i].Name == name)
-                {
-                    volumes[i].Value = value;
-                    return;
-                }
+                return PlayerPrefs.GetFloat(Parameter);
             }
+            set
+            {
+                value = Mathf.Clamp01(value);
 
-            volumes.Add(new VolumeData(name, value));
+                Mixer.SetFloat(Parameter, AudioCore.LinearToDecibel(value));
+
+                PlayerPrefs.SetFloat(Parameter, value);
+            }
         }
 
-        [Serializable]
-        [DataContract(Name = "Data")]
-        public class VolumeData
+        public AudioMixerGroupController(AudioMixerGroup target)
         {
-            [SerializeField]
-            [DataMember]
-            protected string name;
-            public string Name { get { return name; } }
+            this.Target = target;
 
-            [SerializeField]
-            [DataMember]
-            [Range(0f, 1f)]
-            protected float value;
-            public float Value
+            float volume;
+
+            if(Mixer.GetFloat(Parameter, out volume))
             {
-                get
+                volume = AudioCore.DecibelToLinear(volume);
+
+                if(PlayerPrefs.HasKey(Parameter))
                 {
-                    return value;
+                    Volume = PlayerPrefs.GetFloat(Parameter, volume);
                 }
-                set
+                else
                 {
-                    this.value = Mathf.Clamp01(value);
+                    PlayerPrefs.SetFloat(Parameter, volume);
                 }
             }
-
-            public VolumeData(string name, float value)
+            else
             {
-                this.name = name;
-                this.value = value;
+                throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + Target.name + " Mixer Group's volume");
             }
         }
     }

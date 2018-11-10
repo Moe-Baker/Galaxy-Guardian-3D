@@ -42,7 +42,7 @@ namespace Game
         {
             base.Configure();
 
-            Core.SceneAccessor.StartCoroutine(ConfigureProcedure());
+            Core.SceneAccessor.Coroutine.Start(ConfigureProcedure);
         }
 
         public virtual IEnumerator ConfigureProcedure()
@@ -86,7 +86,7 @@ namespace Game
         }
     }
 
-    [CreateAssetMenu(menuName = MenuPath + "Volume")]
+    [CreateAssetMenu(menuName = AudioCore.MenuPath + "Volume")]
 	public partial class AudioCoreVolume : AudioCoreVolumeBase
     {
 		
