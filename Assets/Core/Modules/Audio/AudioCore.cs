@@ -31,15 +31,15 @@ namespace Game
         protected AudioMixer mixer;
         public AudioMixer Mixer { get { return mixer; } }
 
-        public Dictionary<AudioMixerGroup, AudioMixerGroupController> MixerGroupControllers { get; protected set; }
+        public List<AudioMixerGroupController> MixerGroupControllers { get; protected set; }
         protected virtual void ConfigureMixerGroupControllers()
         {
-            MixerGroupControllers = new Dictionary<AudioMixerGroup, AudioMixerGroupController>();
+            MixerGroupControllers = new List<AudioMixerGroupController>();
 
             var groups = mixer.FindMatchingGroups("");
 
             foreach (var group in groups)
-                MixerGroupControllers.Add(group, new AudioMixerGroupController(group));
+                MixerGroupControllers.Add(new AudioMixerGroupController(group));
         }
 
         public override void Configure()
@@ -71,11 +71,11 @@ namespace Game
     [Serializable]
     public class AudioMixerGroupController
     {
-        public AudioMixerGroup Target { get; protected set; }
+        public AudioMixerGroup MixerGroup { get; protected set; }
 
-        public AudioMixer Mixer { get { return Target.audioMixer; } }
+        public AudioMixer Mixer { get { return MixerGroup.audioMixer; } }
 
-        public string Parameter { get { return Target.name + " Volume"; } }
+        public string Parameter { get { return MixerGroup.name + " Volume"; } }
 
         public virtual float Volume
         {
@@ -93,9 +93,9 @@ namespace Game
             }
         }
 
-        public AudioMixerGroupController(AudioMixerGroup target)
+        public AudioMixerGroupController(AudioMixerGroup mixerGroup)
         {
-            this.Target = target;
+            this.MixerGroup = mixerGroup;
 
             float volume;
 
@@ -114,7 +114,7 @@ namespace Game
             }
             else
             {
-                throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + Target.name + " Mixer Group's volume");
+                throw new InvalidOperationException("A parameter named " + Parameter + " is needed to manipulate the " + MixerGroup.name + " Mixer Group's volume");
             }
         }
     }

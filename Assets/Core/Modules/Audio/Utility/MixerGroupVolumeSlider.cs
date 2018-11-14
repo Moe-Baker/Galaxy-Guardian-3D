@@ -37,7 +37,17 @@ namespace Game
 
         protected virtual void Init()
         {
-            controller = Core.Asset.Audio.MixerGroupControllers[group];
+            foreach (var controller in Core.Asset.Audio.MixerGroupControllers)
+            {
+                if(controller.MixerGroup == group)
+                {
+                    this.controller = controller;
+                    break;
+                }
+            }
+
+            if (controller == null)
+                throw new Exception("No AudioMixerGroupController found for MixerGroup: " + group.name + " Of the Mixer: " + group.audioMixer.name);
 
             var slider = GetComponent<Slider>();
 

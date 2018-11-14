@@ -33,11 +33,26 @@ namespace Game
             {
                 value = Mathf.Clamp(value, 0, MaxQuality);
 
+                ApplyQuality(value);
+
                 PlayerPrefs.SetInt(QualityID, value);
             }
         }
         public static string QualityID { get { return nameof(Quality); } }
         public static int MaxQuality { get { return QualitySettings.names.Length - 1; } }
+        public virtual void ApplyQuality(int value)
+        {
+            value = Mathf.Clamp(value, 0, MaxQuality);
+
+            QualitySettings.SetQualityLevel(value);
+        }
+
+        public override void Configure()
+        {
+            base.Configure();
+
+            ApplyQuality(Quality);
+        }
     }
 
     [CreateAssetMenu(menuName = MenuPath + "Video")]
