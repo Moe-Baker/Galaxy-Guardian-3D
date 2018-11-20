@@ -36,14 +36,20 @@ namespace Game
             }
         }
 
+        public event Action OnShow;
         public virtual void Show()
         {
             gameObject.SetActive(true);
+
+            if (OnShow != null) OnShow();
         }
 
+        public event Action OnHide;
         public virtual void Hide()
         {
             gameObject.SetActive(false);
+
+            if (OnHide != null) OnHide();
         }
-	}
+    }
 }

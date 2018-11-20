@@ -30,6 +30,10 @@ namespace Game
 
         #region Modules
         [SerializeField]
+        protected LevelsCore levels;
+        public LevelsCore Levels { get { return levels; } }
+
+        [SerializeField]
         protected AudioCore audio;
         public AudioCore Audio { get { return audio; } }
 
@@ -39,6 +43,7 @@ namespace Game
 
         public virtual void ForEachModule(Action<Core.Module> action)
         {
+            action(levels);
             action(audio);
             action(video);
         }
