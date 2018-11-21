@@ -25,7 +25,16 @@ namespace Game
 
         public override void Execute()
         {
-            SceneManager.UnloadScene(target);
+            StartCoroutine(Procedure());
+        }
+
+        protected virtual IEnumerator Procedure()
+        {
+            var operation = SceneManager.UnloadSceneAsync(target);
+
+            operation.allowSceneActivation = true;
+
+            yield return operation;
         }
     }
 }
