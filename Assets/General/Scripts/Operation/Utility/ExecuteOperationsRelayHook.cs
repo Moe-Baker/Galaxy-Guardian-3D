@@ -19,29 +19,21 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public abstract class InputOperationsExecutor<TComponent> : MonoBehaviour
-    {
+	public class ExecuteOperationsRelayHook : RelayHook
+	{
         public GameObject target;
         public Operation.GameObjectExecutionScope scope = Operation.GameObjectExecutionScope.EntireGameObject;
-
-        protected virtual void Execute()
-        {
-            Operation.ExecuteIn(target, scope);
-        }
 
         protected virtual void Reset()
         {
             target = gameObject;
         }
 
-        protected virtual void Start()
+        protected override void Action()
         {
-            Init(GetComponent<TComponent>());
-        }
+            base.Action();
 
-        protected virtual void Init(TComponent component)
-        {
-
+            Operation.ExecuteIn(target, scope);
         }
     }
 }

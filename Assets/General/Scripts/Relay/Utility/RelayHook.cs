@@ -17,15 +17,23 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-using UnityEngine.EventSystems;
-
 namespace Game
 {
-    public class ImageClickOperationsExecutor : InputOperationsExecutor<Image>, IPointerClickHandler
-    {
-        public void OnPointerClick(PointerEventData eventData)
+	public abstract class RelayHook : MonoBehaviour
+	{
+        protected virtual void Start()
         {
-            Execute();
+            var relay = GetComponent<Relay>();
+
+            if (relay == null)
+                throw Dependancy.FormatException(nameof(Relay), GetType().Name);
+
+            relay.OnAction += Action;
         }
-    }
+
+        protected virtual void Action()
+        {
+
+        }
+	}
 }

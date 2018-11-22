@@ -76,7 +76,7 @@ namespace Game
 
         public static NullReferenceException FormatException(string dependancy, object dependant)
         {
-            var text = "No " + dependancy + " specified for " + dependant.GetType().Name;
+            var text = "No " + dependancy + " found for " + dependant.GetType().Name;
 
             var componentDependant = dependant as Component;
 

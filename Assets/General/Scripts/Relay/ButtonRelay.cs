@@ -20,13 +20,13 @@ using Random = UnityEngine.Random;
 namespace Game
 {
     [RequireComponent(typeof(Button))]
-	public class ButtonOperationsExecutor : InputOperationsExecutor<Button>
+	public class ButtonRelay : Relay<Button>
 	{
         protected override void Init(Button component)
         {
             base.Init(component);
 
-            component.onClick.AddListener(Execute);
+            component.onClick.AddListener(InvokeAction);
         }
     }
 }
