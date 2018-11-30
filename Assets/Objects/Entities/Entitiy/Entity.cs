@@ -62,6 +62,11 @@ namespace Game
             Health = maxHealth;
         }
 
+        public virtual void DoDamage(Entity target, float damage)
+        {
+            target.TakeDamage(this, damage);
+        }
+
         public delegate void TakeDamageDelegate(Entity damager, float damage);
         public event TakeDamageDelegate OnTakeDamage;
         public virtual void TakeDamage(Entity damager, float damage)
@@ -80,17 +85,11 @@ namespace Game
                 Death(damager);
         }
 
-        public virtual void DoDamage(Entity target, float damage)
-        {
-            target.TakeDamage(this, damage);
-        }
-
         public delegate void DeathDelegate(Entity damager);
         public event DeathDelegate OnDeath;
         public virtual void Death(Entity damager)
         {
-            if (OnDeath != null)
-                OnDeath(damager);
+            if (OnDeath != null) OnDeath(damager);
         }
     }
 }

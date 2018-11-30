@@ -27,8 +27,10 @@ namespace Game
 
         public float movementSpeed = 4f;
 
-        protected virtual void Start()
+        public override void Init(AI AI)
         {
+            base.Init(AI);
+
             StartCoroutine(Procedure());
         }
 
@@ -55,6 +57,7 @@ namespace Game
             if (target == null) return;
 
             Entity.DoDamage(target, 20f);
+            Entity.DoDamage(Entity, Entity.Health);
         }
     }
 }
