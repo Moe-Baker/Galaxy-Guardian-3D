@@ -36,6 +36,8 @@ namespace Game
             Input = Dependancy.Get<PlayerInput>(gameObject);
 
             Navigator = Dependancy.Get<PlayerNavigator>(gameObject);
+
+            weapon.Init(Entity);
         }
 
         protected virtual void Update()

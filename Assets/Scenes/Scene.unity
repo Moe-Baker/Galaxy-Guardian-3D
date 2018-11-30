@@ -1367,6 +1367,7 @@ GameObject:
   - component: {fileID: 505392713}
   - component: {fileID: 505392714}
   - component: {fileID: 505392715}
+  - component: {fileID: 505392716}
   m_Layer: 8
   m_Name: Actions
   m_TagString: Untagged
@@ -1381,7 +1382,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 505392712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.031}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 905939914}
@@ -1414,6 +1415,19 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: dee575f39d2332947b4404fdbfd76c91, type: 3}
   audioSource: {fileID: 905939916}
   playMode: 1
+--- !u!114 &505392716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 505392712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4210f94f32267714d9e3d5f638478815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1406315644254736, guid: 707d39cab8c9c854987adede6253c35b, type: 2}
+  point: {fileID: 505392713}
 --- !u!1 &506827073
 GameObject:
   m_ObjectHideFlags: 0
@@ -2823,7 +2837,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 905939913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.633}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 897343506}
