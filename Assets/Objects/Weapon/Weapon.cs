@@ -56,6 +56,8 @@ namespace Game
         public event Action OnAction;
         public virtual void Action()
         {
+            if (!CanUse) return;
+
             if (OnAction != null) OnAction();
         }
 	}

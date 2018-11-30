@@ -25,12 +25,7 @@ namespace Game
         protected ImageHoldRelay holdRelay;
         public ImageHoldRelay HoldRelay { get { return holdRelay; } }
 
-        public event Action OnShoot;
-        protected virtual void Shoot()
-        {
-            if (OnShoot != null)
-                OnShoot();
-        }
+        public bool Shoot { get; protected set; } = false;
 
         protected Vector2 direction = Vector2.zero;
         public Vector2 Direction { get { return direction; } }
@@ -40,8 +35,7 @@ namespace Game
             direction.x = (Input.mousePosition.x - Screen.width / 2f) / (Screen.width / 2f);
             direction.y = (Input.mousePosition.y - Screen.height / 2f) / (Screen.height / 2f);
 
-            if (holdRelay.IsClicked)
-                Shoot();
+            Shoot = holdRelay.IsClicked;
         }
 	}
 }

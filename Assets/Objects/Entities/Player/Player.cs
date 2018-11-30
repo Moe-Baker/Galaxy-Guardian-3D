@@ -27,24 +27,22 @@ namespace Game
         public PlayerInput Input { get; protected set; }
         public PlayerNavigator Navigator { get; protected set; }
 
+        public Weapon weapon;
+
         protected virtual void Awake()
         {
             Entity = GetComponent<Entity>();
 
             Input = Dependancy.Get<PlayerInput>(gameObject);
-            Input.OnShoot += OnShootInput;
 
             Navigator = Dependancy.Get<PlayerNavigator>(gameObject);
-        }
-
-        protected virtual void OnShootInput()
-        {
-            
         }
 
         protected virtual void Update()
         {
             Input.Process();
+
+            weapon.Process(Input.Shoot);
         }
 	}
 }
