@@ -19,20 +19,21 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public abstract class WeaponAction : MonoBehaviour
+	public class WeaponExecuteOperationAction : WeaponAction
 	{
-        protected Weapon weapon;
+        public GameObject target;
+        public Operation.GameObjectExecutionScope scope = Operation.GameObjectExecutionScope.RecursiveToChildern;
 
-        protected virtual void Start()
+        protected virtual void Reset()
         {
-            weapon = Dependancy.Get<Weapon>(gameObject, Dependancy.Scope.RecursiveToParents);
-
-            weapon.OnAction += Action;
+            target = gameObject;
         }
 
-        public virtual void Action()
+        public override void Action()
         {
+            base.Action();
 
+            Operation.ExecuteIn(target, scope);
         }
-	}
+    }
 }

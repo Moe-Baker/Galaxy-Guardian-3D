@@ -23,23 +23,40 @@ namespace Game
 	{
         public Entity Owner { get; protected set; }
 
+        public List<WeaponConstraint> Constraints { get; protected set; }
+        public virtual bool CanUse
+        {
+            get
+            {
+                for (int i = 0; i < Constraints.Count; i++)
+                    if (!Constraints[i].Active)
+                        return false;
+
+                return true;
+            }
+        }
+
         public virtual void Init(Entity owner)
         {
             this.Owner = owner;
+
+            Constraints = Dependancy.GetAll<WeaponConstraint>(gameObject);
         }
 
-        public event Action OnProcess;
-        public virtual void Process()
+        public delegate void ProcessDelegate(bool input);
+        public event ProcessDelegate OnProcess;
+        public virtual void Process(bool input)
         {
-            if (OnProcess != null)
-                OnProcess();
+            if (OnProcess != null) OnProcess(input);
+
+            if (input && CanUse)
+                Action();
         }
 
         public event Action OnAction;
         public virtual void Action()
         {
-            if (OnAction != null)
-                OnAction();
+            if (OnAction != null) OnAction();
         }
 	}
 }
