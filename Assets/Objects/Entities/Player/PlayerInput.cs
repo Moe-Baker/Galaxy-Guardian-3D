@@ -21,8 +21,12 @@ namespace Game
 {
 	public class PlayerInput : MonoBehaviour
 	{
+        [SerializeField]
+        protected ImageHoldRelay holdRelay;
+        public ImageHoldRelay HoldRelay { get { return holdRelay; } }
+
         public event Action OnShoot;
-        protected virtual void InvokeShoot()
+        protected virtual void Shoot()
         {
             if (OnShoot != null)
                 OnShoot();
@@ -35,6 +39,9 @@ namespace Game
         {
             direction.x = (Input.mousePosition.x - Screen.width / 2f) / (Screen.width / 2f);
             direction.y = (Input.mousePosition.y - Screen.height / 2f) / (Screen.height / 2f);
+
+            if (holdRelay.IsClicked)
+                Shoot();
         }
 	}
 }

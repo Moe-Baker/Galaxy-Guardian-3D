@@ -25,7 +25,7 @@ namespace Game
 
         protected virtual void Reset()
         {
-            target = Dependancy.Get<UIElement>(gameObject, Dependancy.Scope.RecursiveToParent);
+            target = Dependancy.Get<UIElement>(gameObject, Dependancy.Scope.RecursiveToParents);
         }
 
         public override void Execute()

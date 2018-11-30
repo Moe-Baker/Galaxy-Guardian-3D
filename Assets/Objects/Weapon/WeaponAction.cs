@@ -19,21 +19,20 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class HideUIElementOperation : Operation.Behaviour
+	public abstract class WeaponAction : MonoBehaviour
 	{
-        public UIElement target;
+        protected Weapon weapon;
 
-        protected virtual void Reset()
+        protected virtual void Start()
         {
-            target = Dependancy.Get<UIElement>(gameObject, Dependancy.Scope.RecursiveToParents);
+            weapon = Dependancy.Get<Weapon>(gameObject, Dependancy.Scope.RecursiveToParents);
+
+            weapon.OnAction += Action;
         }
 
-        public override void Execute()
+        public virtual void Action()
         {
-            if (target == null)
-                throw Dependancy.FormatException(nameof(target), this);
 
-            target.Hide();
         }
-    }
+	}
 }

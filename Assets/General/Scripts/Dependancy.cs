@@ -41,7 +41,7 @@ namespace Game
                         if (component != null) break;
                     }
 
-                if (scope == Scope.RecursiveToParent && target.transform.parent != null)
+                if (scope == Scope.RecursiveToParents && target.transform.parent != null)
                     component = Get<TComponent>(target.transform.parent.gameObject, scope);
             }
 
@@ -62,7 +62,7 @@ namespace Game
                 for (int i = 0; i < target.transform.childCount; i++)
                     list.AddRange(GetAll<TComponent>(target.transform.GetChild(i).gameObject, scope));
 
-            if (scope == Scope.RecursiveToParent)
+            if (scope == Scope.RecursiveToParents)
                 if (target.transform.parent != null)
                     list.AddRange(GetAll<TComponent>(target.transform.parent.gameObject, scope));
 
@@ -71,7 +71,7 @@ namespace Game
 
         public enum Scope
         {
-            Local, RecursiveToChildern, RecursiveToParent
+            Local, RecursiveToChildern, RecursiveToParents
         }
 
         public static NullReferenceException FormatException(string dependancy, object dependant)
