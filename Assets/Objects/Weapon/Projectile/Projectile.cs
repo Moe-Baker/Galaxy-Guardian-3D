@@ -26,6 +26,8 @@ namespace Game
         public virtual void Init(Entity owner)
         {
             this.Owner = owner;
+
+            DisableCollisions.Do(gameObject, owner.gameObject);
         }
 
         public delegate void CollisionDelegate(Collision collision);

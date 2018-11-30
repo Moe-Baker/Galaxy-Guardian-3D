@@ -21,6 +21,8 @@ namespace Game
 {
 	public class EnemyAIController : AIController
 	{
+        public Transform Target { get { return Planet.transform; } }
+
         public float rotationSpeed = 40f;
 
         public float movementSpeed = 4f;
@@ -34,13 +36,15 @@ namespace Game
         {
             while(true)
             {
-                var distance = Vector3.Distance(transform.position, Planet.transform.position);
+                var distance = Vector3.Distance(transform.position, Target.position);
 
                 var angles = transform.eulerAngles;
                 angles.y += rotationSpeed * Time.deltaTime;
                 transform.eulerAngles = angles;
 
-                transform.position = transform.rotation * Vector3.forward * (Mathf.MoveTowards(distance, 0f, movementSpeed * Time.deltaTime));
+                transform.position = Target.position + transform.rotation * Vector3.back * (Mathf.MoveTowards(distance, 0f, movementSpeed * Time.deltaTime));
+
+                yield return new WaitForEndOfFrame();
             }
         }
 	}
