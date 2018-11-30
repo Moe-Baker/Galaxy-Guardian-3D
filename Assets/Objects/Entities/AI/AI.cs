@@ -31,6 +31,7 @@ namespace Game
             Entity = GetComponent<Entity>();
 
             Controller = Dependancy.Get<AIController>(gameObject);
+            Controller.Init(this);
         }
 	}
 }

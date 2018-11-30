@@ -19,11 +19,20 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class DestroyOnCollision : MonoBehaviour
+	public class EntityDestroyOnDeath : MonoBehaviour
 	{
-        void OnCollisionEnter(Collision collision)
+        Entity entity;
+
+        void Start()
         {
-            Destroy(gameObject);
+            entity = Dependancy.Get<Entity>(gameObject, Dependancy.Scope.RecursiveToParents);
+
+            entity.OnDeath += OnDeath;
         }
-	}
+
+        void OnDeath(Entity damager)
+        {
+            Destroy(entity.gameObject);
+        }
+    }
 }

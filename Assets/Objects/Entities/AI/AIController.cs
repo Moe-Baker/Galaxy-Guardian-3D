@@ -24,5 +24,14 @@ namespace Game
         public Planet Planet { get { return Level.Instance.Planet; } }
 
         public Player Player { get { return Level.Instance.Player; } }
+
+        public AI AI { get; protected set; }
+
+        public Entity Entity { get { return AI.Entity; } }
+
+        public virtual void Init(AI AI)
+        {
+            this.AI = AI;
+        }
     }
 }

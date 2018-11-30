@@ -28,14 +28,8 @@ namespace Game
             var colliders2 = Dependancy.GetAll<Collider>(gameobject2);
 
             for (int x = 0; x < colliders1.Count; x++)
-            {
                 for (int y = 0; y < colliders2.Count; y++)
-                {
-                    Debug.Log(colliders1[x].name + " : " + colliders2[y].name);
-
-                    Physics.IgnoreCollision(colliders1[x], colliders2[y]);
-                }
-            }
+                    Physics.IgnoreCollision(colliders1[x], colliders2[y], true);
         }
 	}
 }

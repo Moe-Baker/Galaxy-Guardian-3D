@@ -47,5 +47,14 @@ namespace Game
                 yield return new WaitForEndOfFrame();
             }
         }
-	}
+
+        protected virtual void OnCollisionEnter(Collision collision)
+        {
+            var target = collision.gameObject.GetComponent<Entity>();
+
+            if (target == null) return;
+
+            Entity.DoDamage(target, 20f);
+        }
+    }
 }

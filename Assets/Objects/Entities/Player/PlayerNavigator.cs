@@ -58,7 +58,7 @@ namespace Game
             angles.y = Mathf.MoveTowardsAngle(angles.y, VectorToAngle(vector), rotationSpeed * Time.deltaTime);
             Player.transform.eulerAngles = angles;
 
-            Player.transform.position = Planet.transform.position + (Player.transform.rotation * Vector3.forward) * (Planet.Radius / 2f + distanceFromSurface);
+            Player.transform.position = Planet.transform.position + (Player.transform.rotation * Vector3.forward) * (Planet.Radius + distanceFromSurface);
         }
 
         public static float VectorToAngle(Vector2 vector)
