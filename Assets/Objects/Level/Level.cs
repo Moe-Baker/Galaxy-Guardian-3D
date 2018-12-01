@@ -49,8 +49,8 @@ namespace Game
 
         public virtual void Begin()
         {
-            Menu.Main.Element.Visible = false;
-            Menu.Gameplay.Element.Visible = true;
+            Menu.Main.Element.Hide();
+            Menu.Gameplay.Element.Show();
 
             Spawner.Begin();
 
@@ -78,6 +78,24 @@ namespace Game
             Spawner.Stop();
 
             Player.hasControl = false;
+
+            Menu.Gameplay.Element.Hide();
+            Menu.End.Element.Show();
+        }
+
+        public void Return()
+        {
+            Menu.End.Element.Hide();
+            Menu.Main.Element.Show();
+
+            Player.Entity.Revive();
+            Planet.Entity.Revive();
+        }
+
+        public void Retry()
+        {
+            Return();
+            Begin();
         }
     }
 }

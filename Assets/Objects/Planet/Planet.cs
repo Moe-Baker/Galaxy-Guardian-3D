@@ -34,5 +34,11 @@ namespace Game
 
             collider = Dependancy.Get<SphereCollider>(gameObject);
         }
+
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+                Entity.DoDamage(Entity, Entity.Health);
+        }
 	}
 }

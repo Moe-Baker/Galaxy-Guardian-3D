@@ -34,7 +34,7 @@ namespace Game
         public Menu Gameplay { get { return gameplay; } }
 
         [SerializeField]
-        protected Menu death;
-        public Menu Death { get { return death; } }
+        protected Menu end;
+        public Menu End { get { return end; } }
     }
 }

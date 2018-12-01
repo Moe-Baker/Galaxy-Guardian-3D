@@ -29,8 +29,10 @@ namespace Game
             {
                 return _health;
             }
-            protected set
+            set
             {
+                value = Mathf.Clamp(value, 0f, maxHealth);
+
                 _health = value;
 
                 if (OnHealthChange != null)
@@ -39,6 +41,14 @@ namespace Game
         }
         public delegate void HealthChangeDelegate(float newValue);
         public event HealthChangeDelegate OnHealthChange;
+
+        public virtual bool IsAlive { get { return Health > 0f; } }
+        public virtual bool IsDead { get { return Health == 0f; } }
+
+        public virtual void Revive()
+        {
+            Health = maxHealth;
+        }
 
         [SerializeField]
         protected float maxHealth = 100f;
