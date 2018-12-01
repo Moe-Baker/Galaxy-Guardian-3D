@@ -1,20 +1,16 @@
 fileFormatVersion: 2
-guid: 33858d3a53cf5214d93bef78ed16cdb8
+guid: ecd21473f09fdd445a0928ab515e66ae
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: lambert2
+    2100000: 'Material #362'
+    2100002: 'Material #156'
     2300000: //RootNode
     3300000: //RootNode
-    4300000: polySurface12
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: lambert2
-    second: {fileID: 2100000, guid: 35485feb47c2eec4fa3494d2196e5408, type: 2}
+    4300000: Line002
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
@@ -45,7 +41,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 10
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
