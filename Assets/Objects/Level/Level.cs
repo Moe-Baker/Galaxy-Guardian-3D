@@ -39,10 +39,8 @@ namespace Game
             Instance = this;
 
             Planet = FindObjectOfType<Planet>();
-            Planet.Entity.OnDeath += OnPlanetDied;
 
             Player = FindObjectOfType<Player>();
-            Player.Entity.OnDeath += OnPlayerDied;
 
             Menu = FindObjectOfType<GameMenu>();
 
@@ -51,9 +49,15 @@ namespace Game
 
         public virtual void Begin()
         {
+            Menu.Main.Element.Visible = false;
+            Menu.Gameplay.Element.Visible = true;
+
             Spawner.Begin();
 
-            Player.weapon = true;
+            Player.hasControl = true;
+
+            Planet.Entity.OnDeath += OnPlanetDied;
+            Player.Entity.OnDeath += OnPlayerDied;
         }
 
         void OnPlayerDied(Entity damager)
@@ -68,7 +72,12 @@ namespace Game
 
         void End()
         {
+            Planet.Entity.OnDeath -= OnPlanetDied;
+            Player.Entity.OnDeath -= OnPlayerDied;
+
             Spawner.Stop();
+
+            Player.hasControl = false;
         }
     }
 }

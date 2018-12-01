@@ -19,14 +19,13 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-    [RequireComponent(typeof(UIElement))]
-	public class Menu : MonoBehaviour
+	public class PlayRelayHook : RelayHook
 	{
-        public UIElement Element { get; protected set; }
-
-        protected virtual void Awake()
+        protected override void Action()
         {
-            Element = GetComponent<UIElement>();
+            base.Action();
+
+            Level.Instance.Begin();
         }
     }
 }

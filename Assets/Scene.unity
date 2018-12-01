@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 905939915}
+  hasControl: 0
 --- !u!1 &54934492
 GameObject:
   m_ObjectHideFlags: 0
@@ -4700,7 +4701,7 @@ GameObject:
   - component: {fileID: 1569932680}
   - component: {fileID: 1569932683}
   - component: {fileID: 1569932684}
-  - component: {fileID: 1569932685}
+  - component: {fileID: 1569932686}
   m_Layer: 5
   m_Name: Play
   m_TagString: Untagged
@@ -4827,7 +4828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 191de1ffa3c43a64c9ec6ccd546954c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1569932685
+--- !u!114 &1569932686
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4835,11 +4836,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1569932678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0170343f270d43c4986a60ea3abcedd3, type: 3}
+  m_Script: {fileID: 11500000, guid: 65cb6779aeb827c4c81d5040474d189e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1569932678}
-  scope: 1
 --- !u!1 &1609818479
 GameObject:
   m_ObjectHideFlags: 0
@@ -5981,3 +5980,4 @@ MonoBehaviour:
   radius: 30
   range: 4
   prefab: {fileID: 1602792379136298, guid: d8fc133ec142ea24db61925321e268ae, type: 2}
+  spawnTime: 2
