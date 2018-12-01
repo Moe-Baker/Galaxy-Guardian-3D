@@ -36,6 +36,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4774140266082044}
   - component: {fileID: 114501898376647220}
+  - component: {fileID: 114205960051748504}
+  - component: {fileID: 114013625682445904}
   m_Layer: 9
   m_Name: Death
   m_TagString: Untagged
@@ -304,6 +306,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.39, y: 0.1, z: 0.69474006}
   m_Center: {x: 0, y: 0, z: -0.021133304}
+--- !u!114 &114013625682445904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170813401704668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ad7cebd4fa5ef4499a2e08c78b2799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1602792379136298}
 --- !u!114 &114067361679904076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,6 +329,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f2b8f423cb7dd4a9176f5d1c494f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114205960051748504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170813401704668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 508d58841b9ddb7459e9aea0625fb509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  source: {fileID: 1755416695947506, guid: 4367ed0bbb1d3bc42b15ca80cdef0ca7, type: 2}
+  parent: {fileID: 0}
+  anchor: {fileID: 4774140266082044}
+  position: {x: 0, y: 0, z: 0}
+  angles: {x: 0, y: 0, z: 0}
 --- !u!114 &114389591070275262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -339,6 +369,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b94d85b99220d94ba96013aab99ceaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 1170813401704668}
+  scope: 2
 --- !u!114 &114517727861290060
 MonoBehaviour:
   m_ObjectHideFlags: 1

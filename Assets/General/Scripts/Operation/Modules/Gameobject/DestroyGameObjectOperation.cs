@@ -19,20 +19,20 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class EntityDestroyOnDeath : MonoBehaviour
+	public class DestroyGameObjectOperation : Operation.Behaviour
 	{
-        Entity entity;
+		[SerializeField]
+        protected GameObject target;
+        public GameObject Target { get { return target; } }
 
-        void Start()
+        protected virtual void Reset()
         {
-            entity = Dependancy.Get<Entity>(gameObject, Dependancy.Scope.RecursiveToParents);
-
-            entity.OnDeath += OnDeath;
+            target = gameObject;
         }
 
-        void OnDeath(Entity damager)
+        public override void Execute()
         {
-            Destroy(entity.gameObject);
+            Destroy(target);
         }
     }
 }

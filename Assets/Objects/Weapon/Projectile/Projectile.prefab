@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 407f9440c875e844daf98c6628190007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: {x: 0, y: 0, z: 20}
+  value: {x: 0, y: 0, z: 40}
   relative: 1
 --- !u!114 &114366828132691372
 MonoBehaviour:

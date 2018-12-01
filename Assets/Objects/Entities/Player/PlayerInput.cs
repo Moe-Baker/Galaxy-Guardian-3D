@@ -32,8 +32,8 @@ namespace Game
 
         public virtual void Process()
         {
-            direction.x = (Input.mousePosition.x - Screen.width / 2f) / (Screen.width / 2f);
-            direction.y = (Input.mousePosition.y - Screen.height / 2f) / (Screen.height / 2f);
+            direction.x = (Input.mousePosition.x - Screen.width / 2f);
+            direction.y = (Input.mousePosition.y - Screen.height / 2f);
 
             Shoot = holdRelay.IsClicked;
         }
