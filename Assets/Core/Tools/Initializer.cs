@@ -21,6 +21,16 @@ namespace Game
 {
 	public static class Initializer
 	{
+        public static void Configure()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        static void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+        {
+            Init(scene);
+        }
+
         public static void Init(Scene scene)
         {
             var roots = scene.GetRootGameObjects();

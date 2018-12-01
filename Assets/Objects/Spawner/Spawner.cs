@@ -70,6 +70,7 @@ namespace Game
             var position = GetPosition(rotation);
 
             var instance = Instantiate(prefab, position, rotation);
+            instance.GetComponent<CanvasRenderer>();
         }
 
         public virtual void Begin()

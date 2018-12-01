@@ -72,7 +72,6 @@ namespace Game
         {
             SceneAccessor = new GameObject("Scene Accessor").AddComponent<SceneAccessor>();
         }
-
         #endregion
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -110,6 +109,8 @@ namespace Game
         protected virtual void Configure()
         {
             ConfigureSceneAccessor();
+
+            Initializer.Configure();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
 

@@ -20,7 +20,8 @@ using Random = UnityEngine.Random;
 namespace Game
 {
     [RequireComponent(typeof(Entity))]
-	public class Player : MonoBehaviour
+    [DefaultExecutionOrder(Level.ExecutionOrder + 1)]
+    public class Player : MonoBehaviour
 	{
 		public Entity Entity { get; protected set; }
 
