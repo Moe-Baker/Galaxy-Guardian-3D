@@ -27,9 +27,15 @@ namespace Game
 
         public float movementSpeed = 4f;
 
+        Quaternion rotation;
+        float distance;
+
         public override void Init(AI AI)
         {
             base.Init(AI);
+
+            distance = Vector3.Distance(transform.position, Target.position);
+            rotation = transform.rotation;
 
             StartCoroutine(Procedure());
         }
@@ -38,13 +44,13 @@ namespace Game
         {
             while(true)
             {
-                var distance = Vector3.Distance(transform.position, Target.position);
+                rotation *= Quaternion.Euler(0f, rotationSpeed * Time.deltaTime, 0f);
+                distance = Mathf.MoveTowards(distance, 0f, movementSpeed * Time.deltaTime);
 
-                var angles = transform.eulerAngles;
-                angles.y += rotationSpeed * Time.deltaTime;
-                transform.eulerAngles = angles;
+                transform.rotation = rotation * Quaternion.Euler(0f, Mathf.Lerp(0f, -45f, (distance - Planet.Radius - 2f) / 4f), 0f);
 
-                transform.position = Target.position + transform.rotation * Vector3.back * (Mathf.MoveTowards(distance, 0f, movementSpeed * Time.deltaTime));
+                transform.position = Target.position +
+                    rotation * Vector3.back * distance;
 
                 yield return new WaitForEndOfFrame();
             }
