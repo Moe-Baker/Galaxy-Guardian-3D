@@ -98,6 +98,11 @@ namespace Game
                 StopCoroutine(coroutine);
                 coroutine = null;
             }
+
+            var enemies = FindObjectsOfType<EnemyAIController>();
+
+            foreach (var enemy in enemies)
+                enemy.Entity.DoDamage(enemy.Entity, enemy.Entity.Health);
         }
 
 #if UNITY_EDITOR

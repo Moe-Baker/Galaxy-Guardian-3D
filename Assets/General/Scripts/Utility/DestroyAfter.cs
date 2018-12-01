@@ -19,13 +19,15 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class RetryRelayHook : RelayHook
+	public class DestroyAfter : MonoBehaviour
 	{
-        protected override void Action()
-        {
-            base.Action();
+        public float time = 4f;
 
-            Level.Instance.Retry();
+        IEnumerator Start()
+        {
+            yield return new WaitForSeconds(time);
+
+            Destroy(gameObject);
         }
-    }
+	}
 }
