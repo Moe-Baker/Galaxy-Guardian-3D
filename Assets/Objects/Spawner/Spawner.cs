@@ -72,21 +72,44 @@ namespace Game
             var instance = Instantiate(prefab, position, rotation);
         }
 
-        void Start()
+        public virtual void Begin()
         {
-            Spawn();
+            coroutine = StartCoroutine(Procedure());
         }
 
+        Coroutine coroutine;
+        public bool IsActive { get { return coroutine != null; } }
+        public float spawnTime = 2f;
+        IEnumerator Procedure()
+        {
+            while(true)
+            {
+                Spawn();
+
+                yield return new WaitForSeconds(spawnTime);
+            }
+        }
+
+        public virtual void Stop()
+        {
+            if(coroutine != null)
+            {
+                StopCoroutine(coroutine);
+                coroutine = null;
+            }
+        }
+
+#if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
         {
-#if UNITY_EDITOR
+
             Handles.color = Color.green;
             Handles.DrawWireDisc(transform.position, Vector3.up, radius);
 
             Handles.color = Color.yellow;
             Handles.DrawWireDisc(transform.position, Vector3.up, radius + range);
             Handles.DrawWireDisc(transform.position, Vector3.up, radius - range);
-#endif
         }
+#endif
     }
 }

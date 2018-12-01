@@ -47,7 +47,7 @@ namespace Game
         protected float rotationSpeed = 360f;
         public float RotationSpeed { get { return rotationSpeed; } }
 
-        protected virtual void Update()
+        public virtual void Process()
         {
             SetDirection(Input.Direction);
         }

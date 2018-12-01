@@ -29,6 +29,8 @@ namespace Game
 
         public Weapon weapon;
 
+        public bool hasControl = false;
+
         protected virtual void Awake()
         {
             Entity = GetComponent<Entity>();
@@ -42,9 +44,14 @@ namespace Game
 
         protected virtual void Update()
         {
-            Input.Process();
+            if(hasControl)
+            {
+                Input.Process();
 
-            weapon.Process(Input.Shoot);
+                Navigator.Process();
+
+                weapon.Process(Input.Shoot);
+            }
         }
 	}
 }

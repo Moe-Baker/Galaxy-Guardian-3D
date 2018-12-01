@@ -577,8 +577,9 @@ GameObject:
   - component: {fileID: 251177647}
   - component: {fileID: 251177646}
   - component: {fileID: 251177645}
+  - component: {fileID: 251177649}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Game Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -663,6 +664,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &251177649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 251177644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c488985199f2b943a54e2bb501ad31c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  main: {fileID: 1087825601}
+  options: {fileID: 1149001099}
+  gameplay: {fileID: 1126196301}
 --- !u!1 &281002218
 GameObject:
   m_ObjectHideFlags: 0
@@ -2879,7 +2894,8 @@ AudioSource:
   m_GameObject: {fileID: 905939913}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243262199984181608, guid: 45d648f256357e549b4c57d5589b7daf,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3578,7 +3594,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1087825598
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3753,13 +3769,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1126196299}
+  - component: {fileID: 1126196300}
+  - component: {fileID: 1126196302}
+  - component: {fileID: 1126196301}
   m_Layer: 5
   m_Name: Gameplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1126196299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3780,6 +3799,39 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1126196300
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126196298}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1126196301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126196298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9768766b2791e7d44a9d0a56df33d562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1126196302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1126196298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e60446394c3216546806a91fc5f9f517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1135032651
 GameObject:
   m_ObjectHideFlags: 0
