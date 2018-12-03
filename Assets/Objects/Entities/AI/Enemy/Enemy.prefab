@@ -36,6 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4774140266082044}
   - component: {fileID: 114501898376647220}
+  - component: {fileID: 114244467042268448}
   - component: {fileID: 114205960051748504}
   - component: {fileID: 114013625682445904}
   m_Layer: 9
@@ -303,6 +304,19 @@ MonoBehaviour:
   anchor: {fileID: 4774140266082044}
   position: {x: 0, y: 0, z: 0}
   angles: {x: 0, y: 0, z: 0}
+--- !u!114 &114244467042268448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1170813401704668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0170343f270d43c4986a60ea3abcedd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1170813401704668}
+  scope: 1
 --- !u!114 &114389591070275262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -327,8 +341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b94d85b99220d94ba96013aab99ceaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1170813401704668}
-  scope: 2
 --- !u!114 &114517727861290060
 MonoBehaviour:
   m_ObjectHideFlags: 1

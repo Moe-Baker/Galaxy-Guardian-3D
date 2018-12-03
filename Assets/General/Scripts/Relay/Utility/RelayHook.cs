@@ -28,7 +28,7 @@ namespace Game
             if (relay == null)
                 throw Dependancy.FormatException(nameof(Relay), GetType().Name);
 
-            relay.OnAction += Action;
+            relay.Event += Action;
         }
 
         protected virtual void Action()

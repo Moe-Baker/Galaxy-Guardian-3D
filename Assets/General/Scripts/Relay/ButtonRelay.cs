@@ -26,7 +26,7 @@ namespace Game
         {
             base.Init(component);
 
-            component.onClick.AddListener(InvokeAction);
+            component.onClick.AddListener(InvokeEvent);
         }
     }
 }

@@ -19,21 +19,20 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class WeaponExecuteOperationAction : WeaponAction
+	public class EntityDeathRelay : Relay
 	{
-        public GameObject target;
-        public Operation.GameObjectExecutionScope scope = Operation.GameObjectExecutionScope.RecursiveToChildern;
-
-        protected virtual void Reset()
+        protected override void Start()
         {
-            target = gameObject;
+            base.Start();
+
+            var entity = Dependancy.Get<Entity>(gameObject, Dependancy.Scope.RecursiveToParents);
+
+            entity.OnDeath += OnDeath;
         }
 
-        public override void Action()
+        void OnDeath(Entity damager)
         {
-            base.Action();
-
-            Operation.ExecuteIn(target, scope);
+            InvokeEvent();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Game
     {
         public void OnPointerClick(PointerEventData eventData)
         {
-            InvokeAction();
+            InvokeEvent();
         }
     }
 }

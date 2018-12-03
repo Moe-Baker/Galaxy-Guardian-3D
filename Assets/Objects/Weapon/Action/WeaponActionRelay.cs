@@ -19,36 +19,20 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-    public abstract class Relay : MonoBehaviour
-    {
-        public event Action Event;
-
-        protected virtual void InvokeEvent()
-        {
-            if (!enabled) return;
-
-            if (Event != null)
-                Event();
-        }
-
-        protected virtual void Start()
-        {
-            
-        }
-    }
-
-	public abstract class Relay<TComponent> : Relay
-    {
+	public class WeaponActionRelay : Relay
+	{
         protected override void Start()
         {
             base.Start();
 
-            Init(GetComponent<TComponent>());
+            var weapon = Dependancy.Get<Weapon>(gameObject, Dependancy.Scope.RecursiveToParents);
+
+            weapon.OnAction += OnAction;
         }
 
-        protected virtual void Init(TComponent component)
+        void OnAction()
         {
-
+            InvokeEvent();
         }
     }
 }

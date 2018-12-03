@@ -1756,9 +1756,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 505392713}
-  - component: {fileID: 505392714}
-  - component: {fileID: 505392715}
   - component: {fileID: 505392716}
+  - component: {fileID: 505392714}
+  - component: {fileID: 505392717}
+  - component: {fileID: 505392715}
   m_Layer: 8
   m_Name: Actions
   m_TagString: Untagged
@@ -1790,8 +1791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fdb9437e71c3104d9af32304e516907, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 505392712}
-  scope: 2
 --- !u!114 &505392715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1819,6 +1818,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1406315644254736, guid: 707d39cab8c9c854987adede6253c35b, type: 2}
   point: {fileID: 505392713}
+--- !u!114 &505392717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 505392712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0170343f270d43c4986a60ea3abcedd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 505392712}
+  scope: 1
 --- !u!1 &506827073
 GameObject:
   m_ObjectHideFlags: 0

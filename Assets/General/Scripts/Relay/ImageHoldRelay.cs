@@ -38,7 +38,7 @@ namespace Game
             {
                 yield return new WaitForEndOfFrame();
 
-                InvokeAction();
+                InvokeEvent();
             }
         }
 
