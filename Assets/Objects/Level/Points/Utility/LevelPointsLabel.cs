@@ -40,7 +40,7 @@ namespace Game
 
         public void UpdateState()
         {
-            label.text = preffix + Points.Value.ToString() + suffix;
+            label.text = preffix + Points.Value.ToString("N0") + suffix;
         }
 
         void OnPointsChanged(int newPoints)
