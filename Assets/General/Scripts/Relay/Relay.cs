@@ -25,8 +25,6 @@ namespace Game
 
         protected virtual void InvokeEvent()
         {
-            if (!enabled) return;
-
             if (Event != null)
                 Event();
         }

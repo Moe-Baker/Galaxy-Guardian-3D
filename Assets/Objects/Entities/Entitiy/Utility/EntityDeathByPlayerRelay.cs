@@ -35,5 +35,10 @@ namespace Game
             if (damager == Level.Instance.Player.Entity)
                 InvokeEvent();
         }
+
+        protected override void InvokeEvent()
+        {
+            base.InvokeEvent();
+        }
     }
 }

@@ -20,7 +20,7 @@ using Random = UnityEngine.Random;
 namespace Game
 {
     [RequireComponent(typeof(Text))]
-	public class LevelScoreLabel : MonoBehaviour
+	public class LevelPointsLabel : MonoBehaviour
 	{
         public LevelPoints Points { get { return Level.Instance.Points; } }
 
