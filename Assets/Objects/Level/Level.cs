@@ -26,6 +26,9 @@ namespace Game
 
         public static Level Instance { get; protected set; }
 
+        public LevelPoints Points { get; protected set; }
+
+
         public Planet Planet { get; protected set; }
 
         public Player Player { get; protected set; }
@@ -34,9 +37,13 @@ namespace Game
 
         public Spawner Spawner { get; protected set; }
 
+
         protected virtual void Awake()
         {
             Instance = this;
+
+            Points = Dependancy.Get<LevelPoints>(gameObject);
+
 
             Planet = FindObjectOfType<Planet>();
 
