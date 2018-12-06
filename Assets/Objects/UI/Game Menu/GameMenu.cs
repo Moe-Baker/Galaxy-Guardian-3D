@@ -34,6 +34,10 @@ namespace Game
         public Menu Gameplay { get { return gameplay; } }
 
         [SerializeField]
+        protected Menu pause;
+        public Menu Pause { get { return pause; } }
+
+        [SerializeField]
         protected Menu end;
         public Menu End { get { return end; } }
     }

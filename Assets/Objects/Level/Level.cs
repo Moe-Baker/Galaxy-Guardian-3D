@@ -28,6 +28,8 @@ namespace Game
 
         public LevelPoints Points { get; protected set; }
 
+        public LevelPause Pause { get; protected set; }
+
 
         public Planet Planet { get; protected set; }
 
@@ -43,6 +45,8 @@ namespace Game
             Instance = this;
 
             Points = Dependancy.Get<LevelPoints>(gameObject);
+
+            Pause = Dependancy.Get<LevelPause>(gameObject);
 
 
             Planet = FindObjectOfType<Planet>();
