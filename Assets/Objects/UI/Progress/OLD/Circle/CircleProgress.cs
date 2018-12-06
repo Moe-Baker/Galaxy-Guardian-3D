@@ -17,20 +17,13 @@ using UnityEditorInternal;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Game
+namespace OLD
 {
-	public class ProgressBar : MonoBehaviour
+	public class CircleProgress : MonoBehaviour
 	{
 		[SerializeField]
         protected Image image;
         public Image Image { get { return image; } }
-        protected virtual void SetUpAnchors()
-        {
-            if (image == null) return;
-
-            Image.rectTransform.anchorMin = Vector2.zero;
-            Image.rectTransform.anchorMax = new Vector2(Value, 1f);
-        }
 
         public virtual float Value
         {
@@ -39,14 +32,14 @@ namespace Game
                 if (image == null)
                     throw new NullReferenceException("No image set for " + nameof(ProgressBar) + " on " + name);
 
-                return Image.rectTransform.anchorMax.x;
+                return Image.fillAmount;
             }
             set
             {
                 if (image == null)
                     throw new NullReferenceException("No image set for " + nameof(ProgressBar) + " on " + name);
 
-                Image.rectTransform.anchorMax = new Vector2(value, Image.rectTransform.anchorMax.y);
+                Image.fillAmount = value;
 
                 if (OnValueChange != null) OnValueChange(Value);
             }
@@ -78,20 +71,19 @@ namespace Game
 
             if(image != null)
             {
-                SetUpAnchors();
                 Value = 0.5f;
             }
         }
 
 #if UNITY_EDITOR
-        [CustomEditor(typeof(ProgressBar))]
+        [CustomEditor(typeof(CircleProgress))]
         public class Inspector : Editor
         {
-            new public ProgressBar target;
+            new public CircleProgress target;
 
             protected virtual void OnEnable()
             {
-                target = base.target as ProgressBar;
+                target = base.target as CircleProgress;
             }
 
             public override void OnInspectorGUI()
