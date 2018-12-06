@@ -105,6 +105,8 @@ namespace Game
 
             Player.Entity.Revive();
             Planet.Entity.Revive();
+
+            Points.Value = 0;
         }
 
         public void Retry()

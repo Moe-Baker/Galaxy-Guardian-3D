@@ -26,16 +26,8 @@ namespace Game
         public Menu Main { get { return main; } }
 
         [SerializeField]
-        protected Menu options;
-        public Menu Options { get { return options; } }
-
-        [SerializeField]
         protected Menu gameplay;
         public Menu Gameplay { get { return gameplay; } }
-
-        [SerializeField]
-        protected Menu pause;
-        public Menu Pause { get { return pause; } }
 
         [SerializeField]
         protected Menu end;

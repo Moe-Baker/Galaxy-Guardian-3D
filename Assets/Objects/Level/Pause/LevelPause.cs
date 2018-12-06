@@ -38,8 +38,6 @@ namespace Game
         }
 
         public event Action<LevelPauseState> OnChanged;
-
-        public Menu Menu { get { return Level.Instance.Menu.Pause; } }
     }
 
     public enum LevelPauseState
