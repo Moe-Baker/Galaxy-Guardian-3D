@@ -19,36 +19,43 @@ using Random = UnityEngine.Random;
 
 namespace Game
 {
-	public class ProgressBar : MonoBehaviour
-	{
-		[SerializeField]
-        [Range(0f, 1f)]
-        protected float value;
+    public class ProgressBar : MonoBehaviour
+    {
+        [SerializeField]
+        protected float _value;
         public float Value
         {
             get
             {
-                return value;
+                return _value;
             }
             set
             {
-                var oldValue = this.value;
+                var oldValue = this._value;
 
-                this.value = value;
+                this._value = value;
 
-                if (OnChange != null) OnChange(oldValue, this.value);
+                if (OnChange != null) OnChange(oldValue, this._value);
 
-#if UNITY_EDITOR
                 if (!Application.isPlaying)
-                    SendMessage(Module.EditMessageRecieverTarget, this.value, SendMessageOptions.DontRequireReceiver);
-#endif
+                    InvokeEditorStateUpdate(oldValue, this._value);
             }
         }
 
         public delegate void ChangeDelegate(float oldValue, float newValue);
         public event ChangeDelegate OnChange;
 
-        public class Module : MonoBehaviour, Initializer.Interface
+        public interface IEditorStateUpdate
+        {
+            void EDITOR_UpdateState(float oldValue, float newValue);
+        }
+        protected virtual void InvokeEditorStateUpdate(float oldValue, float newValue)
+        {
+            foreach (var item in Dependancy.GetAll<IEditorStateUpdate>(gameObject))
+                item.EDITOR_UpdateState(oldValue, newValue);
+        }
+
+        public class Module : MonoBehaviour, Initializer.Interface, IEditorStateUpdate
         {
             ProgressBar bar;
 
@@ -78,22 +85,34 @@ namespace Game
 
             }
 
-#if UNITY_EDITOR
-            public const string EditMessageRecieverTarget = nameof(EDITOR_UpdateState);
-            public void EDITOR_UpdateState(float value)
+            public virtual void EDITOR_UpdateState(float oldValue, float newValue)
             {
                 GetDependancies();
 
-                UpdateState(value, value);
+                UpdateState(oldValue, newValue);
             }
-#endif
         }
 
 #if UNITY_EDITOR
         [CustomEditor(typeof(ProgressBar))]
         public class Inspector : Editor
         {
+            new ProgressBar target;
 
+            void OnEnable()
+            {
+                target = base.target as ProgressBar;
+            }
+
+            public override void OnInspectorGUI()
+            {
+                var value = target.Value;
+
+                value = EditorGUILayout.Slider("Value", value, 0f, 1f);
+
+                if (target.Value != value)
+                    target.Value = value;
+            }
         }
 #endif
     }

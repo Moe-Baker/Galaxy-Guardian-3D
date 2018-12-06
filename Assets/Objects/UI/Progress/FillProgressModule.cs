@@ -38,5 +38,13 @@ namespace Game
 
             image.fillAmount = newValue;
         }
+
+        public override void EDITOR_UpdateState(float oldValue, float newValue)
+        {
+            base.EDITOR_UpdateState(oldValue, newValue);
+
+            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+        }
     }
 }

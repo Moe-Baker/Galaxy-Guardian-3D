@@ -30,6 +30,8 @@ namespace Game
 
         public LevelPause Pause { get; protected set; }
 
+        new public LevelCamera camera { get; protected set; }
+
 
         public Planet Planet { get; protected set; }
 
@@ -47,6 +49,8 @@ namespace Game
             Points = Dependancy.Get<LevelPoints>(gameObject);
 
             Pause = Dependancy.Get<LevelPause>(gameObject);
+
+            camera = FindObjectOfType<LevelCamera>();
 
 
             Planet = FindObjectOfType<Planet>();
