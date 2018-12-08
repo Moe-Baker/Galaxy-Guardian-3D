@@ -22,99 +22,145 @@ namespace Game
 	public class Spawner : MonoBehaviour
 	{
         [SerializeField]
-        protected float radius = 20f;
-        public float Radius { get { return radius; } }
-
-        [SerializeField]
-        protected float range = 4f;
-        public float Range { get { return range; } }
-
-        public float RandomDistance
+        protected RangeData range = new RangeData(25f, 30f);
+        public RangeData Range { get { return range; } }
+        [Serializable]
+        public struct RangeData
         {
-            get
+            [SerializeField]
+            float minimum;
+            public float Minimum { get { return minimum; } }
+
+            [SerializeField]
+            float maximum;
+            public float Maximum { get { return maximum; } }
+
+            public float Random
             {
-                return radius + Random.Range(-range, range);
+                get
+                {
+                    return UnityEngine.Random.Range(minimum, maximum);
+                }
+            }
+
+            public RangeData(float minimum, float maximum)
+            {
+                this.minimum = minimum;
+                this.maximum = maximum;
             }
         }
 
-        public float RandomAngle
+        [SerializeField]
+        protected ElementData[] elements;
+        public ElementData[] Elements { get { return elements; } }
+        [Serializable]
+        public class ElementData
         {
-            get
-            {
-                return Random.Range(0f, 360f);
-            }
-        }
+            [SerializeField]
+            protected GameObject prefab;
+            public GameObject Prefab { get { return prefab; } }
 
-        public virtual Vector3 GetPosition(Quaternion rotation, float distance)
-        {
-            return transform.position + (rotation * Vector3.back) * RandomDistance;
-        }
-        public virtual Vector3 GetPosition(Quaternion rotation)
-        {
-            return GetPosition(rotation, RandomDistance);
-        }
+            [SerializeField]
+            protected int minimumWave;
+            public int MinimumWave { get { return minimumWave; } }
 
-        public virtual Vector3 GetRandomPosition()
+            [SerializeField]
+            [Range(1, 100)]
+            protected int probability;
+            public int Probability { get { return probability; } }
+        }
+        public ElementData GetElement()
         {
-            return GetPosition(Quaternion.Euler(0f, RandomAngle, 0f));
+            return elements.First();
         }
 
         [SerializeField]
-        protected GameObject prefab;
-        public GameObject Prefab { get { return prefab; } }
+        protected int waveNumber = 0;
+        public int WaveNumber { get { return waveNumber; } }
 
-        public virtual void Spawn()
+        public Level Level { get { return Level.Instance; } }
+        public GameMenu Menu { get { return Level.Menu; } }
+        public PopupLabel PopupLabel { get { return Menu.PopupLabel; } }
+
+        public void Begin()
         {
-            var rotation = Quaternion.Euler(0f, RandomAngle, 0f);
-
-            var position = GetPosition(rotation);
-
-            var instance = Instantiate(prefab, position, rotation);
-            instance.GetComponent<CanvasRenderer>();
+            StartCoroutine(Procedure());
         }
 
-        public virtual void Begin()
+        public float waveDelay = 5f;
+        protected virtual IEnumerator Procedure()
         {
-            coroutine = StartCoroutine(Procedure());
+            yield return new WaitForSeconds(waveDelay);
+
+            while (true)
+            {
+                waveNumber++;
+
+                yield return WaveProcedure();
+
+                yield return new WaitForSeconds(waveDelay);
+            }
         }
 
-        Coroutine coroutine;
-        public bool IsActive { get { return coroutine != null; } }
-        public float spawnTime = 2f;
-        IEnumerator Procedure()
+        protected virtual IEnumerator WaveProcedure()
         {
+            PopupLabel.Show("WAVE " + waveNumber);
+
+            var spawnCount = 10 * waveNumber / 2;
+
+            var deathCount = 0;
+
+            Entity.DeathDelegate deathAction = (Entity damager) =>
+            {
+                deathCount++;
+            };
+
+            for (int i = 0; i < spawnCount; i++)
+                yield return SpawnProcedure(deathAction);
+
             while(true)
             {
-                Spawn();
+                if (deathCount >= spawnCount)
+                    break;
 
-                yield return new WaitForSeconds(spawnTime);
+                yield return new WaitForEndOfFrame();
             }
         }
 
-        public virtual void Stop()
+        public float spawnDelay = 1.5f;
+        protected virtual IEnumerator SpawnProcedure(Entity.DeathDelegate deathAction)
         {
-            if(coroutine != null)
-            {
-                StopCoroutine(coroutine);
-                coroutine = null;
-            }
+            var element = GetElement();
 
-            var enemies = FindObjectsOfType<EnemyAIController>();
+            var rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            var position = Level.Instance.Planet.transform.position + rotation * Vector3.back * range.Random;
 
-            foreach (var enemy in enemies)
-                enemy.Entity.DoDamage(enemy.Entity, enemy.Entity.Health);
+            var instance = Instantiate(element.Prefab, position, rotation);
+
+            var entity = instance.GetComponent<Entity>();
+            entity.OnDeath += deathAction;
+
+            yield return new WaitForSeconds(spawnDelay / waveNumber);
+        }
+
+        public void Stop()
+        {
+            StopAllCoroutines();
+
+            foreach (var enemy in FindObjectsOfType<EnemyAIController>())
+                enemy.Entity.Suicide();
+
+            waveNumber = 0;
         }
 
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmos()
         {
+            Handles.color = Color.green;
+            Handles.DrawWireDisc(transform.position, Vector3.up, range.Minimum);
 
             Handles.color = Color.green;
-            Handles.DrawWireDisc(transform.position, Vector3.up, radius);
-
-            Handles.color = Color.yellow;
-            Handles.DrawWireDisc(transform.position, Vector3.up, radius + range);
-            Handles.DrawWireDisc(transform.position, Vector3.up, radius - range);
+            Handles.DrawWireDisc(transform.position, Vector3.up, range.Maximum);
         }
 #endif
     }

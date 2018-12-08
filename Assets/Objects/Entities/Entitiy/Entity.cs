@@ -45,6 +45,10 @@ namespace Game
         public virtual bool IsAlive { get { return Health > 0f; } }
         public virtual bool IsDead { get { return Health == 0f; } }
 
+        public virtual void Suicide()
+        {
+            DoDamage(this, Health);
+        }
         public virtual void Revive()
         {
             Health = maxHealth;

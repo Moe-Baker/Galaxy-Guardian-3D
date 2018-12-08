@@ -44,6 +44,16 @@ namespace Game
 
         void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
         {
+            Stop();
+        }
+
+        void OnDisable()
+        {
+            Stop();
+        }
+
+        public void Stop()
+        {
             if (coroutine != null)
             {
                 StopCoroutine(coroutine);

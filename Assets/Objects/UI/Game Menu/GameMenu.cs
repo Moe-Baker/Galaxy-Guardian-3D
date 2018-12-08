@@ -32,5 +32,9 @@ namespace Game
         [SerializeField]
         protected Menu end;
         public Menu End { get { return end; } }
+
+        [SerializeField]
+        protected PopupLabel popupLabel;
+        public PopupLabel PopupLabel { get { return popupLabel; } }
     }
 }

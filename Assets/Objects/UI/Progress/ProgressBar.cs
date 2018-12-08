@@ -57,22 +57,20 @@ namespace Game
 
         public class Module : MonoBehaviour, Initializer.Interface, IEditorStateUpdate
         {
-            ProgressBar bar;
+            protected ProgressBar bar;
 
             public virtual void Init()
             {
-                bar = Dependancy.Get<ProgressBar>(gameObject, Dependancy.Scope.RecursiveToParents);
+                GetDependancies();
 
                 bar.OnChange += OnChange;
-
-                GetDependancies();
 
                 UpdateState(bar.Value, bar.Value);
             }
 
             protected virtual void GetDependancies()
             {
-
+                bar = Dependancy.Get<ProgressBar>(gameObject, Dependancy.Scope.RecursiveToParents);
             }
 
             protected virtual void OnChange(float oldValue, float newValue)
