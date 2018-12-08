@@ -47,8 +47,10 @@ namespace Game
                 rotation *= Quaternion.Euler(0f, rotationSpeed * Time.deltaTime, 0f);
                 distance = Mathf.MoveTowards(distance, 0f, movementSpeed * Time.deltaTime);
 
+                var rate = Mathf.InverseLerp(6f, 0f, distance - Planet.Radius);
+
                 transform.rotation = rotation * 
-                    Quaternion.Euler(0f, Mathf.Lerp(0f, -45f, (distance - Planet.Radius - 2f) / 4f), 0f);
+                    Quaternion.Euler(0f, Mathf.Lerp(-45, 0, rate), 0f);
 
                 transform.position = Target.position +
                     rotation * Vector3.back * distance;
