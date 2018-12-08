@@ -8717,8 +8717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range:
-    minimum: 40
-    maximum: 50
+    minimum: 30
+    maximum: 40
   elements:
   - prefab: {fileID: 1602792379136298, guid: d8fc133ec142ea24db61925321e268ae, type: 2}
     minimumWave: 0
