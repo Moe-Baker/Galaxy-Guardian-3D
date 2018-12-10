@@ -51,8 +51,15 @@ namespace Game
 
                 Navigator.Process();
 
-                weapon.Process(Input.Shoot);
+                ProcessWeapons();
             }
+        }
+
+        protected virtual void ProcessWeapons()
+        {
+            var angle = Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, PlayerNavigator.VectorToAngle(Input.Direction)));
+
+            weapon.Process(Input.Shoot && (!Application.isMobilePlatform || angle < 10f));
         }
 	}
 }
