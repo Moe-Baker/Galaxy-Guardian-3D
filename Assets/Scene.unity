@@ -1397,6 +1397,48 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 465767750}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &475990055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 475990056}
+  - component: {fileID: 475990057}
+  m_Layer: 8
+  m_Name: Left Cannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &475990056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475990055}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.32, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 505392713}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &475990057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 475990055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4210f94f32267714d9e3d5f638478815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1406315644254736, guid: 707d39cab8c9c854987adede6253c35b, type: 2}
+  point: {fileID: 475990056}
 --- !u!1 &487692384
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,7 +1669,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 505392713}
-  - component: {fileID: 505392716}
   - component: {fileID: 505392714}
   - component: {fileID: 505392717}
   - component: {fileID: 505392715}
@@ -1647,7 +1688,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1992577783}
+  - {fileID: 475990056}
   m_Father: {fileID: 905939914}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1676,19 +1719,6 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: dee575f39d2332947b4404fdbfd76c91, type: 3}
   audioSource: {fileID: 905939916}
   playMode: 1
---- !u!114 &505392716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 505392712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4210f94f32267714d9e3d5f638478815, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefab: {fileID: 1406315644254736, guid: 707d39cab8c9c854987adede6253c35b, type: 2}
-  point: {fileID: 505392713}
 --- !u!114 &505392717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1701,7 +1731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 505392712}
-  scope: 1
+  scope: 2
 --- !u!1 &506827073
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,7 +3951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b50f3a533678cf44bbff21817ee4ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 600
+  value: 800
 --- !u!1 &901867040
 GameObject:
   m_ObjectHideFlags: 0
@@ -4008,7 +4038,7 @@ GameObject:
   - component: {fileID: 905939915}
   - component: {fileID: 905939916}
   m_Layer: 8
-  m_Name: Weapon 1
+  m_Name: Projectile Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4021,7 +4051,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 905939913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 897343506}
@@ -5090,7 +5120,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 996.1175, y: 177.40378}
+  m_SizeDelta: {x: 975.20276, y: 176.28665}
   m_Pivot: {x: 0.5, y: 0.25}
 --- !u!114 &1120226785
 MonoBehaviour:
@@ -7093,7 +7123,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 336.7826, y: 94.86833}
+  m_SizeDelta: {x: 333.8194, y: 91.894104}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1609818481
 MonoBehaviour:
@@ -7827,7 +7857,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1735308866}
   m_Enabled: 1
-  m_Alpha: 0.5
+  m_Alpha: 0.2
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -8603,6 +8633,48 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1987472477}
   m_CullTransparentMesh: 0
+--- !u!1 &1992577782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1992577783}
+  - component: {fileID: 1992577784}
+  m_Layer: 8
+  m_Name: Right Cannon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1992577783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1992577782}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.32, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 505392713}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1992577784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1992577782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4210f94f32267714d9e3d5f638478815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1406315644254736, guid: 707d39cab8c9c854987adede6253c35b, type: 2}
+  point: {fileID: 1992577783}
 --- !u!1 &1997491957
 GameObject:
   m_ObjectHideFlags: 0
@@ -8865,6 +8937,9 @@ MonoBehaviour:
     minimum: 30
     maximum: 40
   elements:
+  - prefab: {fileID: 1922581126656744, guid: 18de34204b1dc3642a6d22df146b04e7, type: 2}
+    minimumWave: 0
+    probability: 0
   - prefab: {fileID: 1602792379136298, guid: d8fc133ec142ea24db61925321e268ae, type: 2}
     minimumWave: 0
     probability: 0

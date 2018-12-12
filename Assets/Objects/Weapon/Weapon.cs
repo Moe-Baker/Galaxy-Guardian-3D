@@ -51,6 +51,14 @@ namespace Game
 
             if (input && CanUse)
                 Action();
+            else
+                Idle();
+        }
+
+        public event Action OnIdle;
+        protected virtual void Idle()
+        {
+            if (OnIdle != null) OnIdle();
         }
 
         public event Action OnAction;

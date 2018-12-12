@@ -36,7 +36,7 @@ namespace Game
         {
             base.Action();
 
-            var instance = Instantiate(prefab, transform.position, transform.rotation);
+            var instance = Instantiate(prefab, point.position, point.rotation);
 
             var projectile = instance.GetComponent<Projectile>();
             projectile.Init(weapon.Owner);

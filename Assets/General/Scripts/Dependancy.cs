@@ -31,14 +31,14 @@ namespace Game
 
             component = target.GetComponent<TComponent>();
 
-            if (component == null)
+            if (IsNull(component))
             {
                 if (scope == Scope.RecursiveToChildern)
                     for (int i = 0; i < target.transform.childCount; i++)
                     {
                         component = Get<TComponent>(target.transform.GetChild(i).gameObject, scope);
 
-                        if (component != null) break;
+                        if (!IsNull(component)) break;
                     }
 
                 if (scope == Scope.RecursiveToParents && target.transform.parent != null)
@@ -95,6 +95,15 @@ namespace Game
                 text += " On gameObject: " + componentDependant.gameObject;
 
             return text;
+        }
+
+        public static bool IsNull(object target)
+        {
+            if (target == null) return true;
+
+            if (target.Equals(null)) return true;
+
+            return false;
         }
     }
 }

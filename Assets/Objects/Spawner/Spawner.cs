@@ -71,7 +71,7 @@ namespace Game
         }
         public ElementData GetElement()
         {
-            return elements.First();
+            return elements[Random.Range(0, elements.Length)];
         }
 
         [SerializeField]
